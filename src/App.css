@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-color: rgb(81, 183, 155);
+  height: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -7,6 +10,13 @@
   pointer-events: none;
 }
 
+
+h2
+{
+  font-family: 'Georgia';
+  font-weight: bolder;
+  display: flex;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -28,6 +38,8 @@
   color: #61dafb;
 }
 
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +48,5 @@
     transform: rotate(360deg);
   }
 }
+
+
