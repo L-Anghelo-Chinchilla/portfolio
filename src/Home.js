@@ -1,5 +1,6 @@
 import React from 'react';
-import NavBar from './components/NavBar';
+import Projects from './components/Project';
+
 
 let skills = [ 
   { 
@@ -39,18 +40,11 @@ let skills = [
 
 function Home() {
   return (
-    <div className="App">
-      <NavBar/>
-      
-
-      <div>
+    <div >
         <h2>
           PERSONAL PROJECTS
         </h2>
-          
-
-
-      </div>
+        <Projects/>
     </div>
   );
 }
