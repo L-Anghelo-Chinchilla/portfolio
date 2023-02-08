@@ -1,51 +1,37 @@
 import React from 'react';
 import Projects from './components/Project';
+import styled from 'styled-components';
+import SkillList from './components/SkillList';
 
 
-let skills = [ 
-  { 
-    name:"C++" ,
-    desc:"Competitive programming, Algorithms , data structures",
-    color:""
-  },
-  {
-    name:"JAVA",
-    desc:"POO, TDD , SPRING.",
-    color:""
-  },  
-  {
-    name:"SQL",
-    desc:"POSTGRESSQL",
-    color:""
-  },  
-  {
-    name:"DART/FLUTTER",
-    desc:"MOBILE, responsive development",
-    color:""
-  },  
-  {
-    name:"HTML, CSS, JS",
-    desc:"Vanilla JS,  CSS , REACT",
-    color:""
-  },  
-  {
-    name:"PYTHON",
-    desc:"Task Automaton",
-    color:""
-  },  
-]
+let H2 = styled.h2`
+  font-family: 'Georgia';
+  font-stretch: expanded;
+  font-weight: bolder;
+  display: flex;
+  margin:0px 20px ;
+  font-size:3rem;
 
-
-
+`
 
 function Home() {
   return (
     <div >
-        <h2>
+      <div style={{'height':'80px'}}/>
+        <H2>
           PERSONAL PROJECTS
-        </h2>
+        </H2>
         <Projects/>
+    <div>
+        <H2>
+          MY SKILLS
+        </H2>
+        <SkillList />
     </div>
+    </div>
+
+
+
   );
 }
 

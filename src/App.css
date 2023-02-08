@@ -9,20 +9,12 @@ html{
 .App {
   text-align: center;
   background-color: rgb(81, 183, 155);
+  /* color: ; */
   height: 100%;
   width: 100%;
 }
 
 
-h2
-{
-  font-family: 'Georgia';
-  font-stretch: expanded;
-  font-size:100rem;
-  font-weight: bolder;
-  display: flex;
-  margin: 100px;
-}
 
 .App-header {
   background-color: #282c34;

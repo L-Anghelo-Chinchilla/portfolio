@@ -13,7 +13,7 @@ const SocialLink =( { url , logo , name } )=>
   return (
 
     <>
-        <a href={url}> 
+        <a target="_blank" href={url}> 
             <Simg src={logo} alt={name} />
         </a>
     </>
