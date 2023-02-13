@@ -10,12 +10,24 @@ justify-content: left;
 text-align: center;
 `
 
+const Led= styled.div`
+  margin: auto 7px;
+  border-radius: 50px;
+  border-color: white;
+  border-width: 1px;
+  height:13px;
+  width:13px;
+  background-color:${props => props.color};
+  -webkit-box-shadow: inset  0px 0px 1px 2px ${props => "dark"+props.color}; 
+box-shadow: inset 0px 0px 1px 2px ${props => "dark"+props.color};
+`
+
 const Pin =( { color , name   })=>
 {
   return (
     <div style={{'text-align':'end'}}>
      <Rdiv>  
-        <Rdiv style={{'margin':'auto 7px','height':'10px','width':'10px','background-color':color}}/>
+        <Led color = {color}/>
         <p>{name}</p>
      </Rdiv>
     </div>

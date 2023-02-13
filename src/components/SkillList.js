@@ -45,7 +45,7 @@ const SkillList = () => {
             <Container>
 
                 <Row>
-                    <div style={{ 'background-color': 'black', 'height': '400px', 'width': '400px' }}></div>
+                    <div style={{ 'background-color': 'black', 'height': '50px', 'width': '50px' }}></div>
                     <Col style={{'padding':'30px'}}>
                         {skills.map(
                             (e , i) => (

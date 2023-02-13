@@ -6,7 +6,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(81, 183, 155);
+  
+}
 
+:root{
+  --bs-nav-pills-link-active-bg:teal; 
+  --color-primary:'teal';
 }
 
 code {
