@@ -3,6 +3,7 @@ import Projects from './components/Project';
 import styled from 'styled-components';
 import SkillList from './components/SkillList';
 import Awards from './components/Awards';
+import Presentation from './components/Presentation';
 
 
 let H2 = styled.h2`
@@ -16,16 +17,23 @@ let H2 = styled.h2`
   
 `
 
+
 function Home() {
   return (
     <div style={{'background-color':'rgb(113, 214, 182)'}}>
       <div style={{'height':'60px'}}/>
 
+      
+
+      <div style={{'background-color':'rgb(113, 214, 182)'}}>
+
+        <Presentation/>
+      </div>
       <div style={{'background-color':'rgb(113, 214, 182)'}}>
         <H2>
-          PERSONAL PROJECTS
+          HONORS AND AWARDS
         </H2>
-        <Projects/>
+        < Awards/>
       </div>
     <div style={{'background-color':'rgb(93, 194, 165)'}}>
         <H2>
@@ -35,9 +43,9 @@ function Home() {
     </div>
     <div style={{'background-color':'rgb(113, 214, 182)'}} >
         <H2>
-          HONORS AND AWARDS
+          PERSONAL PROJECTS
         </H2>
-        < Awards/>
+        <Projects/>
     </div>
     </div>
 

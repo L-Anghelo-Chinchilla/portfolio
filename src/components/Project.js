@@ -9,6 +9,7 @@ import sketch from '../media/sketch.png';
 import Home from '../media/Home.png';
 import Path from '../media/Path.png';
 import allpaths from '../media/allpaths.png';
+import port from '../media/port.png';
 import styled from 'styled-components';
 
 
@@ -20,7 +21,7 @@ const tooltip = (
 
 const tooltip2 = (
     <Tooltip id="tooltip">
-        <strong>Check the repo!</strong> 
+        <strong>Check this repo!</strong> 
     </Tooltip>
 );
 
@@ -29,7 +30,7 @@ let proj = [
     {
         name: "Regular Polygon Playground",
         lang: "Java",
-        color: "orange",
+        color: "red",
         desc: "Multiplatform aplication that allows to draw regular polygons of any number of sides. Made for learning regular polygons while having fun drawing.",
         url: "https://github.com/L-Anghelo-Chinchilla/Regular-Polygon-Playground",
         images: [drawing, draw, clear, sketch]
@@ -41,6 +42,14 @@ let proj = [
         desc: "Windows interactive UI aplication to find the shortest path between two locations in a map.",
         url: "https://github.com/L-Anghelo-Chinchilla/Map-Visualizer-2000",
         images: [Home, Path, allpaths]
+    },
+    {
+        name: "This very Portfolio",
+        lang: "React",
+        color: "orange",
+        desc: "You can download this very project on GitHub.",
+        url: "https://github.com/L-Anghelo-Chinchilla/portfolio",
+        images: [port]
     }
 ]
 
@@ -50,7 +59,6 @@ const cent = {
     'font-size': '23px'
 }
 
-
 let Divider = styled.div`
     background-color:rgba(3 , 3 ,3 ,0.1);
     border-radius:17px;
@@ -58,6 +66,7 @@ let Divider = styled.div`
     width:100%;
     margin:0px 0px ;
 `
+
 let Link = styled(NavLink)`
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
@@ -69,6 +78,13 @@ let Link = styled(NavLink)`
     }
 `
 
+const styl = {  
+    height: 'clamp( 450px , 60%  , 800px)',
+    width: 'clamp( 450px , 60% , 800px)',
+    margin: 'auto',
+    'z-index':'100'
+  }
+  
 const Projects = () => {
     return (
         <Container>
@@ -78,7 +94,7 @@ const Projects = () => {
                         
                         <OverlayTrigger placement="left" overlay={tooltip}>
                             <Link target="_blank" href={pro.url}>
-                                {pro.name + " ⇱ "}
+                                {pro.name + " 🔗 "}
                             </Link>
                         </OverlayTrigger>
                         <Row >
@@ -88,7 +104,7 @@ const Projects = () => {
                         
                         <OverlayTrigger placement="top" overlay={tooltip2}>
                         <a target="_blank" href={pro.url}>
-                            <Carrussel style={cent} images={pro.images} />
+                            <Carrussel styl={styl} images={pro.images} />
                         </a>
                         </OverlayTrigger>
                         <p style={cent} >{pro.desc}</p>

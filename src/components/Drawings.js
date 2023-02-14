@@ -74,19 +74,14 @@ let H2 = styled.h2`
 const Floating = styled.img`
 
 
--webkit-box-shadow: -8px 10px 5px 0px rgba(131, 28, 129,0.39); 
-  box-shadow: -8px 10px 5px 0px rgba(131, 28, 129,0.39);
-
-
+-webkit-box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39); 
+  box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39);         
   :hover
   {
     transform: scale(1.1 , 1.1 );
     transform: translate(20% , 2    0%);
-    transition: transform 400ms ease-in-out 0ms;
-    
+    transition: transform 400ms ease-in-out 0ms; 
   }
-  
-
 `
  
 const Drawings =( )=>
@@ -102,7 +97,6 @@ const Drawings =( )=>
             e => (
                 <Col style={{'height':'500px' , 'margin':'auto 20px',  'display':'inline-block'}}>
                     <Floating style={{'height':'80%' , 'display':'block'}} src={e.img} />
-
                 </Col>
             )
             )}

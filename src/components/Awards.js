@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, NavLink, Row, Stack, Container } from 'react-bootstrap';
+import { Col, NavLink, Row, Stack, Container, OverlayTrigger , Tooltip } from 'react-bootstrap';
 import Imag from './Imag';
 import ICPClogo1 from './../media/ICPClogo1.png';
 import ICPClogo2 from './../media/ICPClogo2.png';
@@ -9,6 +9,17 @@ import medal from './../media/medal.png';
 import nomedal from './../media/nomedal.png';
 import latino from './../media/latino.jpg';
 import styled from 'styled-components';
+import premiacion from './../media/premiacion.jpg'
+import morros from './../media/morros.jpg'
+import youuuu from './../media/youuuu.jpg'
+import Carrussel from './Carrussel';
+
+const tooltip = (
+    <Tooltip id="tooltip" >
+        <strong>Go to Scoreboard!</strong> 
+    </Tooltip>
+);
+
 
 const contests = [
     {
@@ -37,6 +48,19 @@ const contests = [
         medal: nomedal
     }
 ]
+
+const photos = [
+    latino,
+    premiacion,
+    morros,
+    youuuu
+]
+const stl = {
+    'width':'max(30% ,400px)' , 
+    'height':'max(30% , 400px)' , 
+    'margin':'20px auto'
+}
+
 
 
 let Link = styled(NavLink)`
@@ -82,21 +106,14 @@ const Animimg = styled.img`
  @keyframes levitate {
     0% {
       transform: translateY(0%);
-    }
-    
+    }   
     25%{
       
       transform: translateY(-50%);
-    }
-
-    
+    }   
     50% {
       transform: translateY( 0%);
-    }
-    
-  
-
-    
+    }    
   }
 `
 const Awards = () => {
@@ -109,23 +126,23 @@ const Awards = () => {
                         <Animimg src={ICPClogo1} i="100"  />
                         <Animimg src={ICPClogo2} i="400"  />
                         <Animimg src={ICPClogo3} i="600"   />
-
                     </Stack>
                 </Row>
                 <div style={{ 'height': '50px' }}></div>
                 <Row>
-
-                <SContainer  style={{'width':'max(  50%, 700px  )'}}>
+                <SContainer  style={{'width':'max(  50%, 700px  )','margin':'0px 0px 50px 0px'}}>
                     {contests.map(cont => (
                         <Stack  direction='horizontal' style={bottom} >
                             <img src={cont.medal} style={{ 'width': '40px', 'height': '40px' }} />
+                            <OverlayTrigger placement="top" overlay={tooltip}>
                             <Link target="_blank" href={cont.url}>
-                                {cont.title}
+                                {cont.title + "🔗"}
                             </Link>
+                            </OverlayTrigger>
                         </Stack>
                     ))}
                 </SContainer>
-                <img style={{'width':'max(30% ,400px)' , 'height':'max(30% , 400px)' , 'margin':'20px auto'}} src={latino}/>
+                <Carrussel images={photos} styl={stl} />
                 </Row>
             </Col>
         </Container>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import SkillBlock from './SkillBlock';
-
+import stats from './../media/stats.png';
 
 let skills = [
     {
@@ -36,17 +36,15 @@ let skills = [
     },
 ]
 
-const SkillList = () => {
-
-
-    
+const SkillList = () => {    
     return (
         <>
             <Container>
 
                 <Row>
-                    <div style={{ 'background-color': 'black', 'height': '50px', 'width': '50px' }}></div>
-                    <Col style={{'padding':'30px'}}>
+
+                    <img src={stats} style={{'width':'400px' , 'height':'400px' ,'margin':'auto' }}/>
+                    <Col style={{'padding':'30px' , 'margin':'50px'}}>
                         {skills.map(
                             (e , i) => (
                                 <SkillBlock ind={i*500} color={e.color} desc={e.desc} name={e.name} />

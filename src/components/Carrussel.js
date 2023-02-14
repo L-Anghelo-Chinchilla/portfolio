@@ -2,15 +2,8 @@ import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 
-const styl = {  
-  height: 'clamp( 450px , 60%  , 800px)',
-  width: 'clamp( 450px , 60% , 800px)',
-  margin: 'auto',
-  'z-index':'100'
-}
 
-
-const Carrussel =( { images })=>
+const Carrussel =( { images , styl })=>
 {
   return (
 
