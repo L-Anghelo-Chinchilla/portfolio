@@ -1,12 +1,12 @@
 import React from 'react';
 import hando from './../media/drawings/hando.jpg';
 import aux from './../media/drawings/poster.jpg';
-import buzz from './../media/drawings/buzz.png';
+import buzz from './../media/drawings/buzz.jpg';
 import hando_s from './../media/drawings/sketch.jpg';
 import minicamp from './../media/drawings/Camp.jpg';
-import moto from './../media/drawings/Motociclista.png';
-import ayudas from './../media/drawings/ayudas.png';
-import unicornui from './../media/drawings/unicornui.png';
+import moto from './../media/drawings/Motociclista.jpg';
+import ayudas from './../media/drawings/ayudas.jpg';
+import unicornui from './../media/drawings/unicornui.jpg';
 import radio from './../media/drawings/radio.jpg';
 import dart from './../media/drawings/dart.jpg';
 import eye from './../media/drawings/eye.jpg';
@@ -72,8 +72,6 @@ let H2 = styled.h2`
 
 `
 const Floating = styled.img`
-
-
 -webkit-box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39); 
   box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39);         
   :hover
