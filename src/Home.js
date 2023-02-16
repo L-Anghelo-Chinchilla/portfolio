@@ -25,9 +25,9 @@ let H2 = styled.h2`
 
 function Home() {
   return (
-    <div style={{'background-color':'rgb(113, 214, 182)'}}>
+    <div style={{'background-color':'rgb(93, 194, 165)'}}>
       <div style={{'height':'60px'}}/>
-      <div style={{'background-color':'rgb(113, 214, 182)'}}>
+      <div style={{'background-color':'rgb(93, 194, 165)'}}>
         <Presentation/>
       </div>
       <div id="awards" style={{'width': '100vw', 'background-color':'rgb(113, 214, 182)'}}>

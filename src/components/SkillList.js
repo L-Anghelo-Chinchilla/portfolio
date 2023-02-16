@@ -43,7 +43,7 @@ const SkillList = () => {
 
                 <Row>
 
-                    <img src={stats} style={{'width':'400px' , 'height':'400px' ,'margin':'auto' }}/>
+                    <img src={stats} style={{'width':'min(50vw ,  400px)' , 'height':'min(50vw, 400px)' ,'margin':'auto' }}/>
                     <Col style={{'padding':'30px' , 'margin':'50px'}}>
                         {skills.map(
                             (e , i) => (

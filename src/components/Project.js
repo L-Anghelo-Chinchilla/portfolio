@@ -74,7 +74,7 @@ let Link = styled(NavLink)`
     letter-spacing: 2px;
     :hover
     {
-        color: teal;
+        color: aliceblue;
     }
 `
 

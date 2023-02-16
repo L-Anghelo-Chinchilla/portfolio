@@ -71,7 +71,7 @@ let Link = styled(NavLink)`
     margin:20px;
     :hover
     {
-        color: teal;
+        color: aliceblue;
     }
 `
 const SContainer = styled(Container)`
@@ -79,6 +79,7 @@ const SContainer = styled(Container)`
     border-color: white;
     border-width: 5px;
     border-style: dashed;
+    margin: 15px ;
 
 `
 const Logo = styled.img`
@@ -130,7 +131,7 @@ const Awards = () => {
                 </Row>
                 <div style={{ 'height': '50px' }}></div>
                 <Row>
-                <SContainer  style={{'width':'max(  50%, 700px  )','margin':'0px 0px 50px 0px'}}>
+                <SContainer  style={{'width':'max(  50%, 650px  )','margin':'0px 0px 50px 0px'}}>
                     {contests.map(cont => (
                         <Stack  direction='horizontal' style={bottom} >
                             <img src={cont.medal} style={{ 'width': '40px', 'height': '40px' }} />

@@ -69,16 +69,27 @@ let H2 = styled.h2`
   margin:0px 20px ;
   padding: 20px;
   font-size:3rem;
-
+    
 `
 const Floating = styled.img`
 -webkit-box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39); 
   box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39);         
+    border-color:white-space;
   :hover
   {
-    transform: scale(1.1 , 1.1 );
-    transform: translate(20% , 2    0%);
-    transition: transform 400ms ease-in-out 0ms; 
+      transform   :scale(1.1 , 1.1 );
+      transform   :translate(20% , 2    0%);
+      transition  :all  300ms  ease-out;
+    
+
+      /* transition  :border-style 600ms linear ;
+      transition  :border-color 600ms linear ;
+      /* transition  :box-shadow 400ms ease-in-out 0ms; */
+      border-style:solid;
+      border-color: white;
+      border-width: 2px;
+      -webkit-box-shadow: -5px 15px 3px 0px rgba(0, 0, 0,0.39); 
+     box-shadow: -5px 15px 15px 3px rgba(0, 0, 0,0.39);         
   }
 `
  

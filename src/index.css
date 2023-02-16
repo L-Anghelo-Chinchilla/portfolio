@@ -16,6 +16,21 @@ body {
 
 }
 
+
+h2 {
+  @media only screen and (max-width: 900px) {
+    font-size:18px ; 
+    color:white;
+  }
+}
+
+a{
+  @media only screen and (max-width: 900px) {
+    font-size:14px ; 
+  
+  }
+   
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

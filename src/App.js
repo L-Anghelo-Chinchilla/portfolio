@@ -19,8 +19,9 @@ let SNavbar = styled.div`
 
 const Pill = styled(Nav.Item)`
    display:flex;
-  --bs-nav-pills-link-active-bg:teal; 
-  --bs-link-color:#3FA484;
+   --bs-nav-link-hover-color: midnightblue;
+   --bs-nav-pills-link-active-bg:teal; 
+   --bs-link-color:#3FA484;
   --bs-link-hover-color:lightgray;
   --bs-nav-link-color:white;
 `
@@ -33,7 +34,7 @@ const navi= {
 }
 
 
-let An = styled.a`
+const An = styled.a`
   color:white;
   font-size:20px;
   font-weight:bold;
@@ -41,7 +42,8 @@ let An = styled.a`
   margin:15px;
   text-decoration:None;
   :hover{
-    color:blueviolet;
+    color: midnightblue;
+    transition: color 100ms ;
   }
 `
 const anch = 
@@ -62,11 +64,11 @@ function App() {
       <SNavbar>
         <Container>
           <Stack direction='horizontal' gap={3} >
-            <An style={anch} href="#awards"> Awards</An>
+            <An  href="#awards"> Awards</An>
             <div style={{'width':'2px' , 'height':'20px' , 'background-color':'white' }}/>
-            <a style={anch} href="#skills"> Skills</a>
+            <An  href="#skills"> Skills</An>
             <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
-            <a style={anch} href="#work" > My Work</a>
+            <An  href="#work" > My Work</An>
             <Nav classname="justify-content-end" style={navi} variant="pills" >
               <Pill>
                 <Nav.Link eventKey="first"> Programming </Nav.Link>
