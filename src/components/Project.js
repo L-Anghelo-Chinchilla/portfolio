@@ -78,19 +78,12 @@ let Link = styled(NavLink)`
     }
 `
 
-let Carusel = styled(Carrussel)`
-height: clamp( 450px , 60%  , 800px);
-width: clamp( 450px , 60% , 800px);
-margin: auto;
-z-index:100;
-
-/* @media only  screen and (max-width: 900px)
-{
-    display: none;
-    width:90vw
-}
-   */
-`  
+const styl = {  
+    //height: 'min(  9  , 800px)',
+    width: 'min( 85vw , 800px)',
+    margin: 'auto',
+    'z-index':'100'
+  }
   
 const Projects = () => {
     return (
@@ -111,7 +104,7 @@ const Projects = () => {
                         
                         <OverlayTrigger placement="top" overlay={tooltip2}>
                         <a target="_blank" href={pro.url}>
-                            <Carusel  images={pro.images} />
+                            <Carrussel styl={styl} images={pro.images} />
                         </a>
                         </OverlayTrigger>
                         <p style={cent} >{pro.desc}</p> 

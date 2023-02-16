@@ -69,10 +69,10 @@ const Presentation = () => {
                     <BigP color="bisque" sp="2px">self-taught.</BigP>
                     <BigP color="maroon" sp="2px">And I like to draw!✨ </BigP>
                 </Col>
-                <div style={parent}>
+                {/* <div style={parent}>
                 <Simage pos={"relative"} i={"0s"} src={prog} />
                 <Simage pos={"absolute"} i={"2s"} src={dib}   />
-                </div>
+                </div> */}
             </Row>
         </Container>
     );
