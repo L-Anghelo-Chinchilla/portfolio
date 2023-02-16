@@ -22,15 +22,20 @@ let SNavbar = styled.div`
   @media screen and (max-width:900px){
     gap:0px;
   }
-`
+  `
 
 const Pill = styled(Nav.Item)`
-   display:flex;
+   /* display:flex; */
    --bs-nav-link-hover-color: midnightblue;
    --bs-nav-pills-link-active-bg:teal; 
    --bs-link-color:#3FA484;
    --bs-link-hover-color:lightgray;
    --bs-nav-link-color:white;
+   
+   @media screen and (max-width:900px){
+     width:100%;
+     text-align:center;
+   }
    `
 
 const navi= {
