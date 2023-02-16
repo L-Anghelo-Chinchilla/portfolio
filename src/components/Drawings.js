@@ -69,9 +69,12 @@ let H2 = styled.h2`
   margin:0px 20px ;
   padding: 20px;
   font-size:3rem;
-    
+height: auto;
 `
 const Floating = styled.img`
+height:400px ; 
+margin:20px;  
+display:inline-block;
 -webkit-box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39); 
   box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39);         
     border-color:white-space;
@@ -91,6 +94,13 @@ const Floating = styled.img`
       -webkit-box-shadow: -5px 15px 3px 0px rgba(0, 0, 0,0.39); 
      box-shadow: -5px 15px 15px 3px rgba(0, 0, 0,0.39);         
   }
+  
+  @media screen and (max-width:900px){
+      
+    margin: 7%;
+    width: 86% ;
+    height:auto;
+  }
 `
  
 const Drawings =( )=>
@@ -101,12 +111,10 @@ const Drawings =( )=>
     <H2>
         MY DRAWINGS
     </H2>
-    <Container>
+    <Container className="align-items-center">
         {draws.map(
             e => (
-                <Col style={{'height':'500px' , 'margin':'auto 20px',  'display':'inline-block'}}>
-                    <Floating style={{'height':'80%' , 'display':'block'}} src={e.img} />
-                </Col>
+                    <Floating  src={e.img} />
             )
             )}
     </Container>
