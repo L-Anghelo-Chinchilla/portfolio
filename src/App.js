@@ -57,16 +57,23 @@ const An = styled.a`
     display:none;
   }
 `
-const Icon = styled.img`
+const Icon = styled.a`
   margin:0px;
   width : 25px;
   height: 25px;
   @media screen and (min-width:899px){
     display: none;
   }
+  `
+
+const Iconimg = styled.img`
+margin:0px;
+width : 25px;
+height: 25px;
+@media screen and (min-width:899px){
+  display: none;
+}
 `
-
-
 
 
 function App() {
@@ -76,13 +83,20 @@ function App() {
         <Container>
           <Stack direction='horizontal' gap={3} >
               <An  href="#awards"> Awards</An>
-              <Icon src={ awardsicon } />
+              <Icon  href="#awards" >
+                <Iconimg src={ awardsicon } />
+              </Icon>
               <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
-              <Icon src={ skillsicon} />
+              <Icon  href="#skills" >
+                <Iconimg src={ skillsicon} />
+              </Icon>
+
               <An  href="#skills"> Skills</An>
               <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
               <An  href="#work" > My Work</An>
-              <Icon src={ projectsicon } />
+              <Icon   href="#work">
+               <Iconimg src={ projectsicon } />
+              </Icon>
             <Nav classname="justify-content-end" style={navi} variant="pills" >
               <Pill>
                 <Nav.Link eventKey="first"> Programming </Nav.Link>
