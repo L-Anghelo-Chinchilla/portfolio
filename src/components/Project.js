@@ -78,12 +78,19 @@ let Link = styled(NavLink)`
     }
 `
 
-const styl = {  
-    height: 'clamp( 450px , 60%  , 800px)',
-    width: 'clamp( 450px , 60% , 800px)',
-    margin: 'auto',
-    'z-index':'100'
-  }
+let Carusel = styled(Carrussel)`
+height: clamp( 450px , 60%  , 800px);
+width: clamp( 450px , 60% , 800px);
+margin: auto;
+z-index:100;
+
+/* @media only  screen and (max-width: 900px)
+{
+    display: none;
+    width:90vw
+}
+   */
+`  
   
 const Projects = () => {
     return (
@@ -104,11 +111,10 @@ const Projects = () => {
                         
                         <OverlayTrigger placement="top" overlay={tooltip2}>
                         <a target="_blank" href={pro.url}>
-                            <Carrussel styl={styl} images={pro.images} />
+                            <Carusel  images={pro.images} />
                         </a>
                         </OverlayTrigger>
-                        <p style={cent} >{pro.desc}</p>
-
+                        <p style={cent} >{pro.desc}</p> 
                         <Divider />
                         {/* <div style={{'height':'20px'}}></div> */}
                     </Col>

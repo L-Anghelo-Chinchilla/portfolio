@@ -4,13 +4,9 @@ import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import githublogo from './media/githublogo.png';
-import linkedinlogo from './media/LinkedInlogo.png';
-import SocialLink from './components/SocialLink';
 import { Container, Stack } from 'react-bootstrap';
 import styled from 'styled-components';
 import Drawings from './components/Drawings';
-// import Carrussel from './components/Carrussel';
 
 
 let SNavbar = styled.div`
@@ -20,18 +16,58 @@ let SNavbar = styled.div`
   top: 0px;
   width: 100%;
 `
+
 const Pill = styled(Nav.Item)`
---bs-nav-pills-link-active-bg:teal; 
+   display:flex;
+  --bs-nav-pills-link-active-bg:teal; 
+  --bs-link-color:#3FA484;
+  --bs-link-hover-color:lightgray;
+  --bs-nav-link-color:white;
 `
+
+const navi= {
+  'margin-left':'auto', 
+  'background-color': 'rgb(103,204,172)', 
+  'border-radius': '7px' ,
+  'color':'white' ,
+}
+
+
+let An = styled.a`
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  font-family:Monaco;
+  margin:15px;
+  text-decoration:None;
+  :hover{
+    color:blueviolet;
+  }
+`
+const anch = 
+{
+  'color':'white',
+  'font-size':'20px',
+  'font-weight':'bold',
+  'font-family':'Monaco',
+  'margin':'15px',
+  'text-decoration':'None',
+  
+}
+
+
 function App() {
   return (
     <Tab.Container id="app" classname="App" defaultActiveKey="first" style={{'background-color':'rgb(113, 214, 182)'}}>
       <SNavbar>
         <Container>
           <Stack direction='horizontal' gap={3} >
-          <SocialLink logo={githublogo} name='GitHub' url='https://github.com/L-Anghelo-Chinchilla' />
-          <SocialLink logo={linkedinlogo} name='LinkedIn' url='https://www.linkedin.com/in/luis-anghelo-pe%C3%B1a-chinchilla-46482b264/' />
-            <Nav classname="justify-content-end" style={{'margin-left':'auto', 'background-color': 'white', 'border-radius': '7px' }} variant="pills" >
+            <An style={anch} href="#awards"> Awards</An>
+            <div style={{'width':'2px' , 'height':'20px' , 'background-color':'white' }}/>
+            <a style={anch} href="#skills"> Skills</a>
+            <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
+            <a style={anch} href="#work" > My Work</a>
+            <Nav classname="justify-content-end" style={navi} variant="pills" >
               <Pill>
                 <Nav.Link eventKey="first"> Programming </Nav.Link>
               </Pill>
@@ -43,12 +79,10 @@ function App() {
         </Container>
       </SNavbar>
       <Tab.Content style={{'background-color':'rgb(113, 214, 182)'}} >
-  
         <Tab.Pane eventKey="first" style={{'--bs-nav-pills-link-active-bg':'teal'}}>
           <Home />
         </Tab.Pane>
         <Tab.Pane eventKey="second">
-          {/* <Carrussel/>  */}
           <Drawings/>
         </Tab.Pane>
       </Tab.Content>
