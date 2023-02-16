@@ -34,11 +34,10 @@ const Pill = styled(Nav.Item)`
    `
 
 const navi= {
-  'margin-left':'auto', 
+  'margin':'5px 5px 5px auto',
   'background-color': 'rgb(103,204,172)', 
   'border-radius': '7px' ,
   'color':'white' ,
-  margin:'5px'
 }
 
 
