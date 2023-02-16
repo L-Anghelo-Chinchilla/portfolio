@@ -1,23 +1,23 @@
 self.__precacheManifest = [
   {
-    "revision": "6312b5ed697d042e5440",
-    "url": "/portfolio/static/css/main.c85af0c3.chunk.css"
+    "revision": "90c6d68da0a873dbef21",
+    "url": "/portfolio/static/css/main.0b959948.chunk.css"
   },
   {
-    "revision": "6312b5ed697d042e5440",
-    "url": "/portfolio/static/js/main.6312b5ed.chunk.js"
+    "revision": "90c6d68da0a873dbef21",
+    "url": "/portfolio/static/js/main.90c6d68d.chunk.js"
   },
   {
     "revision": "fd4558148f9f5a1e56bf",
     "url": "/portfolio/static/js/1.fd455814.chunk.js"
   },
   {
-    "revision": "73b2ffed146cd47cac75",
+    "revision": "ba152fcb786f9d67702d",
     "url": "/portfolio/static/css/2.0435f053.chunk.css"
   },
   {
-    "revision": "73b2ffed146cd47cac75",
-    "url": "/portfolio/static/js/2.73b2ffed.chunk.js"
+    "revision": "ba152fcb786f9d67702d",
+    "url": "/portfolio/static/js/2.ba152fcb.chunk.js"
   },
   {
     "revision": "a095011d3761d76906c3",
@@ -80,6 +80,14 @@ self.__precacheManifest = [
     "url": "/portfolio/static/media/youuuu.6f47fdcd.jpg"
   },
   {
+    "revision": "b4be89835c45ce3c0d64349d1036ed81",
+    "url": "/portfolio/static/media/Capa 3.b4be8983.svg"
+  },
+  {
+    "revision": "723831c412b6441be802a39f2309fa25",
+    "url": "/portfolio/static/media/Capa 4.723831c4.svg"
+  },
+  {
     "revision": "5130d87c289b34bfc33d47fb586d365f",
     "url": "/portfolio/static/media/LinkedInlogo.5130d87c.png"
   },
@@ -132,15 +140,7 @@ self.__precacheManifest = [
     "url": "/portfolio/static/media/eye.fe1ec0c8.jpg"
   },
   {
-    "revision": "b4be89835c45ce3c0d64349d1036ed81",
-    "url": "/portfolio/static/media/Capa 3.b4be8983.svg"
-  },
-  {
-    "revision": "723831c412b6441be802a39f2309fa25",
-    "url": "/portfolio/static/media/Capa 4.723831c4.svg"
-  },
-  {
-    "revision": "f9fecdfa9535dbac2d9035033402aeff",
+    "revision": "0b56800d0652ed9a2bd273164efecd97",
     "url": "/portfolio/index.html"
   }
 ];
