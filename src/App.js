@@ -42,7 +42,7 @@ const navi= {
   'margin':'5px 5px 5px auto',
   'background-color': 'rgb(103,204,172)', 
   'border-radius': '7px' ,
-  'color':'white' ,
+  'color':'white' , 
 }
 
 

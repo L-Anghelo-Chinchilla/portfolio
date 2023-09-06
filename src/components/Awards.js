@@ -5,7 +5,8 @@ import ICPClogo1 from './../media/ICPClogo1.png';
 import ICPClogo2 from './../media/ICPClogo2.png';
 import ICPClogo3 from './../media/ICPClogo3.png';
 import logo4 from './../media/ICPClogo4.png';
-import medal from './../media/medal.png';
+import goldenMedal from './../media/goldenMedal.png';
+import silverMedal from './../media/silverMedal.png';
 import nomedal from './../media/nomedal.png';
 import latino from './../media/latino.jpg';
 import styled from 'styled-components';
@@ -23,23 +24,28 @@ const tooltip = (
 
 const contests = [
     {
+        title: '1st place in competitive contest "Cocha Somos innovacion" 2nd edition, team "Pdelinpiesa2880".',
+        url: "https://www.facebook.com/assuresoft/posts/pfbid0aTYy8qe3h7B66gdA4cemQVnBmCzk11BAxKxj4WkkKcUmFtpzzwZ9j8j1Xj3CyNEPl?locale=es_LA",
+        medal: goldenMedal
+    },
+    {
         title: '3rd place in ICPC Bolivia 2021, team "Qué Pasó?".',
         url: "https://icpc.global/regionals/finder/bolivia-preliminary-2021/standings",
-        medal: medal
+        medal: silverMedal
     },
     {
         title: '4th place in ICPC Bolivia 2022, team "Dlinpiesa".',
         url: "https://icpc.global/regionals/finder/bolivia-preliminary-2022/standings.",
-        medal: medal
+        medal: silverMedal
     },
     {
-        title: '3rd place in First programming contest Cochabamba "Somos innovación 2022",promoted by Cochabamba mayors office. team "Dlimpiesa".',
+        title: '3rd place in First programming contest Cochabamba "Somos innovación 2022". team "Dlimpiesa".',
         url: "https://www.facebook.com/gamcochabamba/posts/pfbid02Z3PGtnC91Lw9etX5e41EM5UGAKM5yD7ppudbnGUrzxvGXwtcN1xUhRPzD3oQK3Zpl",
-        medal: medal
+        medal: silverMedal
     },
     {
-        title: '25th place in the ICPC South America/South 2021 regional contest. team "Qué Pasó?"',
-        url: "https://icpc.global/regionals/finder/SouthAmerica-South-2021/standings",
+        title: '23th place in the ICPC South America/South 2022 regional contest. team "Dlimpiesa"',
+        url: "https://icpc.global/regionals/finder/SouthAmerica-South-2022/standings",
         medal: nomedal
     },
     {
@@ -75,10 +81,10 @@ let Link = styled(NavLink)`
     }
 `
 const SContainer = styled(Container)`
-    border-radius: 15px;
+    /* border-radius: 15px;
     border-color: white;
     border-width: 5px;
-    border-style: dashed;
+    border-style: dashed; */
     margin: 15px ;
 
 `

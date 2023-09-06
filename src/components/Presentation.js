@@ -69,8 +69,7 @@ const Presentation = () => {
                     <BigP color="white" sp="4px" >Hi, I'm a</BigP>
                     <BigP color="crimson" sp="2px" >Competitive programmer,</BigP>
                     <BigP color="khaki" sp="2px">CS student and developer,</BigP>
-                    <BigP color="midnightblue" sp="2px">Science and Art enthusiast,</BigP>
-                    <BigP color="bisque" sp="2px">self-taught.</BigP>
+                    <BigP color="midnightblue" sp="2px">Science and Art enthusiast.</BigP>
                     <BigP color="maroon" sp="2px">And I like to draw!✨ </BigP>
                 </Col>
                 <Parent >

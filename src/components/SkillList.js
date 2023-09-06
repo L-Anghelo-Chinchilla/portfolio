@@ -16,7 +16,7 @@ let skills = [
     },
     {
         name: "SQL",
-        desc: "Queries, POSTGRESSQL.",
+        desc: "Database Design, DataBase Queries, POSTGRESSQL.",
         color: "green"
     },
     {
@@ -26,7 +26,7 @@ let skills = [
     },
     {
         name: "HTML,CSS,JS",
-        desc: "HTML, CSS, Vanilla JS , REACT.",
+        desc: "HTML, CSS, Vanilla JS , REACT.JS, NODE.JS , NEXT.JS ",
         color: "orange"
     },
     {

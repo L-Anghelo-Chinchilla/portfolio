@@ -44,10 +44,10 @@ let proj = [
         images: [Home, Path, allpaths]
     },
     {
-        name: "This very Portfolio",
+        name: "This Portfolio",
         lang: "React",
         color: "orange",
-        desc: "You can download this very project on GitHub.",
+        desc: "You can download this project on GitHub.",
         url: "https://github.com/L-Anghelo-Chinchilla/portfolio",
         images: [port]
     }
