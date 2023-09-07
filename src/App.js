@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
@@ -10,6 +10,7 @@ import Drawings from './components/Drawings';
 import awardsicon from './media/awards.png';
 import skillsicon from './media/skills.png';
 import projectsicon from './media/projects.png';
+import SillyCat from './components/SillyCat';
 
 
 
@@ -81,7 +82,12 @@ height: 25px;
 `
 
 
+
+
+
 function App() {
+  const [ show , setShow ] = useState(true);
+  
   return (
     <Tab.Container id="app" classname="App" defaultActiveKey="first" style={{'background-color':'rgb(113, 214, 182)'}}>
       <SNavbar>
@@ -95,7 +101,6 @@ function App() {
               <Icon  href="#skills" >
                 <Iconimg src={ skillsicon} />
               </Icon>
-
               <An  href="#skills"> Skills</An>
               <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
               <An  href="#work" > My Work</An>
@@ -105,9 +110,10 @@ function App() {
             <Nav classname="justify-content-end" style={navi} variant="pills" >
               <Pill>
                 <Nav.Link eventKey="first"> Programming </Nav.Link>
-              </Pill>
-              <Pill>
+              </Pill >
+              <Pill style={{'position':'relative'}} onClick={()=> setShow(false) }>
                 <Nav.Link eventKey="second"> Drawings </Nav.Link>
+               { show && <SillyCat/>}
               </Pill>
             </Nav>
           </Stack>
