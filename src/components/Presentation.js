@@ -17,23 +17,22 @@ const BigP = styled.span`
 
 const Parent = styled.div`
 position: relative;
-top: 0;
-left: 0;
-width: 30vw;
-@media screen and (max-width:900px){
+width: max( 30vw , 300px ) ;
+height: auto ;
+/* @media screen and (max-width:900px){
        display :none ;
-}
+} */
 // 'height': '30vw'
 `
 
 
 const Simage = styled.img`
-    position: ${props => props.pos};
+    position:absolute;
     top:0;
     left:0;
-    width:400px;
+    width:100%;
     display:inline-block;
-    animation-duration:4s;
+    animation-duration:5s;
     animation-delay: ${props => props.i};
     animation-timing-function: linear;
     animation-name: woosh;
@@ -41,42 +40,47 @@ const Simage = styled.img`
     opacity: 0;
   
   @keyframes woosh {
-    0% {
-      opacity: 0.0;
+    0%,50%,100% {
+      opacity: 0;
     }   
-    10%{ 
+    10%,40%{ 
       opacity: 100;
     }
-    40%{
-        opacity: 100;
-    }
-    50%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 0;
-    }
+    
   }
   `
+
+const InvRow = styled(Row)`
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    @media only screen and (max-width: 900px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+  }
+
+`
+
 
 
 const Presentation = () => {
     return (
 
-        <Container style={{ 'display': 'flex', 'align-items': 'center', 'height': '90vh' }}>
-            <Row classname="justify-content-center">
-                <Col style={{ 'width': '70vw'  }}>
+        <Container style={{ 'display': 'flex', 'justify-content': 'center', 'height': '90vh' }}>
+            <InvRow className='flex'>
+                <Parent >
+                <Simage i={"0s"} src={prog} />
+                <Simage i={"2.5s"} src={dib}   />
+                </Parent> 
+                <Col style={{ 'width': 'max(70vw , 600px)' , 'justify-content':'center'  , 'align-items':'center'}}>
                     <BigP color="white" sp="4px" >Hi, I'm a</BigP>
                     <BigP color="crimson" sp="2px" >Competitive programmer,</BigP>
                     <BigP color="khaki" sp="2px">CS student and developer,</BigP>
                     <BigP color="midnightblue" sp="2px">Science and Art enthusiast.</BigP>
                     <BigP color="maroon" sp="2px">And I like to draw!✨ </BigP>
                 </Col>
-                <Parent >
-                <Simage pos={"relative"} i={"0s"} src={prog} />
-                <Simage pos={"absolute"} i={"2s"} src={dib}   />
-                </Parent> 
-            </Row>
+            </InvRow>
         </Container>
     );
 }

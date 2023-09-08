@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="14.40" height="14.40" viewBox="0.00 0.00 70.00 70.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g stroke-linecap="round" id="pawsvg">
+<path d="M54.52,66.87 C62.06,66.50 63.85,66.93 64.40,66.53 C64.94,66.12 66.20,64.53 65.73,58.76 C65.51,55.99 64.34,52.77 63.40,49.98 C62.77,48.18 61.00,46.26 59.40,45.57 C57.84,44.98 51.73,44.07 49.49,44.09 C47.01,44.15 44.10,45.56 43.53,46.97 C43.04,48.34 43.70,53.12 44.88,62.79 C45.46,67.60 52.11,66.98 54.52,66.87 Z" fill="rgb(256,256,256)" stroke="rgb(0, 0, 0)" stroke-width="3.58" stroke-opacity="1.00" stroke-linejoin="miter"/>
+<path d="M6.83,61.79 C7.55,57.30 9.05,56.42 9.59,54.19 C10.18,51.85 12.46,47.50 14.09,46.30 C14.92,45.72 24.16,43.69 29.40,45.53 C30.62,45.96 31.42,48.75 31.17,50.70 C31.17,50.70 30.85,55.07 28.65,63.21 C27.62,67.00 22.46,66.83 17.39,66.69 C12.49,66.56 5.98,67.04 6.83,61.79 Z" fill="rgb(256,256,256)" stroke="rgb(0, 0, 0)" stroke-width="3.58" stroke-opacity="1.00" stroke-linejoin="miter"/>
+<path d="M48.12,44.88 C48.12,44.88 50.62,48.88 50.62,48.88" fill="none" stroke="rgb(0, 0, 0)" stroke-width="3.00" stroke-opacity="1.00" stroke-linejoin="miter"/>
+<path d="M55.62,45.12 C55.62,45.12 56.25,49.38 56.25,49.38" fill="none" stroke="rgb(0, 0, 0)" stroke-width="3.00" stroke-opacity="1.00" stroke-linejoin="miter"/>
+<path d="M19.88,45.25 C19.88,45.25 18.88,49.38 18.88,49.38" fill="none" stroke="rgb(0, 0, 0)" stroke-width="3.00" stroke-opacity="1.00" stroke-linejoin="miter"/>
+<path d="M26.12,45.50 C26.12,45.50 24.25,50.62 24.25,50.62" fill="none" stroke="rgb(0, 0, 0)" stroke-width="3.00" stroke-opacity="1.00" stroke-linejoin="miter"/>
+</g>
+</svg>
