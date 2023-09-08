@@ -81,7 +81,15 @@ height: 25px;
 }
 `
 
-
+const Stepper = styled.div`
+  display: none;
+  opacity: 0 ;
+  width: 100% ;
+  height: 90px ;
+  @media screen and (max-width:900px){
+       display :block ;
+  }
+`
 
 
 
@@ -117,8 +125,9 @@ function App() {
               </Pill>
             </Nav>
           </Stack>
-        </Container>
+      </Container>
       </SNavbar>
+      <Stepper/>
       <Tab.Content style={{'background-color':'rgb(113, 214, 182)' ,'width':'100vw'}} >
         <Tab.Pane eventKey="first" style={{'--bs-nav-pills-link-active-bg':'teal'}}>
           <Home />
