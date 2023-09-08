@@ -18,7 +18,8 @@ const BigP = styled.span`
 const Parent = styled.div`
 position: relative;
 width: max( 30vw , 300px ) ;
-height: auto ;
+height: max(40vh , 100px ) ;
+margin: 0px 50% ;
 /* @media screen and (max-width:900px){
        display :none ;
 } */
@@ -67,13 +68,13 @@ const InvRow = styled(Row)`
 const Presentation = () => {
     return (
 
-        <Container style={{ 'display': 'flex', 'justify-content': 'center', 'height': '90vh' }}>
+        <Container style={{ 'display': 'flex', 'justify-content': 'center', 'height': '90vh', 'margin':'auto' }}>
             <InvRow className='flex'>
                 <Parent >
                 <Simage i={"0s"} src={prog} />
                 <Simage i={"2.5s"} src={dib}   />
                 </Parent> 
-                <Col style={{ 'width': 'max(70vw , 600px)' , 'justify-content':'center'  , 'align-items':'center'}}>
+                <Col style={{'display':'block', 'width': 'max(70vw' , 'justify-content':'center'  , 'align-items':'center'}}>
                     <BigP color="white" sp="4px" >Hi, I'm a</BigP>
                     <BigP color="crimson" sp="2px" >Competitive programmer,</BigP>
                     <BigP color="khaki" sp="2px">CS student and developer,</BigP>
