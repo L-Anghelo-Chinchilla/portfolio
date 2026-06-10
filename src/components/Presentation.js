@@ -76,8 +76,8 @@ const Presentation = () => {
                 </Parent> 
                 <Col style={{'display':'block', 'width': 'max(70vw' , 'justify-content':'center'  , 'align-items':'center'}}>
                     <BigP color="white" sp="4px" >Hi, I'm a</BigP>
+                    <BigP color="khaki" sp="2px">Full-stack software developer,</BigP>
                     <BigP color="crimson" sp="2px" >Competitive programmer,</BigP>
-                    <BigP color="khaki" sp="2px">CS student and developer,</BigP>
                     <BigP color="midnightblue" sp="2px">Science and Art enthusiast.</BigP>
                     <BigP color="maroon" sp="2px">And I like to draw!✨ </BigP>
                 </Col>
