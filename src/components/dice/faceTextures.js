@@ -16,18 +16,56 @@ function drawFace(value, bodyColor, pips) {
   canvas.width = canvas.height = size;
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = bodyColor;
-  ctx.fillRect(0, 0, size, size);
+  const paintBase = () => {
+    ctx.fillStyle = bodyColor;
+    ctx.fillRect(0, 0, size, size);
 
-  if (pips.border && pips.border.width > 0) {
-    const w = pips.border.width * size;
-    ctx.strokeStyle = pips.border.color;
-    ctx.lineWidth = w;
-    ctx.strokeRect(size * 0.12, size * 0.12, size * 0.76, size * 0.76);
-  }
+    if (pips.border && pips.border.width > 0) {
+      const w = pips.border.width * size;
+      ctx.strokeStyle = pips.border.color;
+      ctx.lineWidth = w;
+      ctx.strokeRect(size * 0.12, size * 0.12, size * 0.76, size * 0.76);
+    }
+  };
+  paintBase();
 
   const color = value === 1 && pips.oneColor ? pips.oneColor : pips.color;
   ctx.fillStyle = color;
+
+  const imageUrls = [].concat((pips.images && pips.images[value]) || []);
+  if (imageUrls.length) {
+    // Drawn centered over the body color once loaded; `multiply` lets a white
+    // image background take the dice color instead of showing as a square.
+    // With several images, `userData.shuffle()` repaints the face with a random one.
+    const texture = new THREE.CanvasTexture(canvas);
+    const loaded = [];
+    let current = null;
+    const paint = (img) => {
+      current = img;
+      paintBase();
+      const box = size * pips.imageScale;
+      const k = Math.min(box / img.width, box / img.height);
+      const w = img.width * k;
+      const h = img.height * k;
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+      texture.needsUpdate = true;
+    };
+    const first = Math.floor(Math.random() * imageUrls.length);
+    imageUrls.forEach((url, i) => {
+      const img = new Image();
+      img.onload = () => {
+        loaded.push(img);
+        if (i === first || !current) paint(img);
+      };
+      img.src = url;
+    });
+    texture.userData.shuffle = () => {
+      if (loaded.length > 1) paint(loaded[Math.floor(Math.random() * loaded.length)]);
+    };
+    return finishTexture(texture);
+  }
 
   if (pips.style === 'numbers') {
     const px = Math.round(size * 0.6);
@@ -53,7 +91,10 @@ function drawFace(value, bodyColor, pips) {
     });
   }
 
-  const texture = new THREE.CanvasTexture(canvas);
+  return finishTexture(new THREE.CanvasTexture(canvas));
+}
+
+function finishTexture(texture) {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = 4;
   return texture;
@@ -68,16 +109,9 @@ function shade(color, amount) {
 
 // Returns { 1: Texture, ..., 6: Texture }. Custom images load in the background.
 export function createFaceTextures(config) {
-  const loader = new THREE.TextureLoader();
   const out = {};
   for (let v = 1; v <= 6; v++) {
-    const url = config.pips.images && config.pips.images[v];
-    if (url) {
-      out[v] = loader.load(url);
-      out[v].colorSpace = THREE.SRGBColorSpace;
-    } else {
-      out[v] = drawFace(v, config.body.color, config.pips);
-    }
+    out[v] = drawFace(v, config.body.color, config.pips);
   }
   return out;
 }
