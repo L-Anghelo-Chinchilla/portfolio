@@ -11,7 +11,7 @@ import awardsicon from './media/awards.png';
 import skillsicon from './media/skills.png';
 import projectsicon from './media/projects.png';
 import SillyCat from './components/SillyCat';
-import Dice3D from './components/dice/Dice3D';
+import Dice3D from './components/dice/LazyDice';
 
 
 

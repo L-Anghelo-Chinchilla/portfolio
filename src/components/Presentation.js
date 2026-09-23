@@ -51,6 +51,17 @@ const Simage = styled.img`
   }
   `
 
+// Same box as the drawing (700x434); the dice's "cast the dice" bubble is placed here.
+const DiceAnchor = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 700 / 434;
+    pointer-events: none;
+    z-index: 1;
+`
+
 const InvRow = styled(Row)`
     display: flex;
     align-content: center;
@@ -73,6 +84,7 @@ const Presentation = () => {
                 <Parent >
                 <Simage i={"0s"} src={prog} />
                 <Simage i={"2.5s"} src={dib}   />
+                <DiceAnchor id="dice-prompt-anchor" />
                 </Parent> 
                 <Col style={{'display':'block', 'width': 'max(70vw' , 'justify-content':'center'  , 'align-items':'center'}}>
                     <BigP color="white" sp="4px" >Hi, I'm a</BigP>

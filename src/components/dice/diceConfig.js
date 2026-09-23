@@ -3,7 +3,9 @@
 //   <Dice3D config={{ body: { color: '#1e3a8a' }, pips: { color: '#fff' } }} />
 // Nested objects are merged, so you only need to set what you want to change.
 
-const WOODBLOCK = `${process.env.PUBLIC_URL}/sounds/woodblock-3.mp3`;
+import catvg from '../../media/catvg.svg';
+
+const WOODBLOCK =`${process.env.PUBLIC_URL}/sounds/woodblock-3.mp3`;
 
 const diceConfig = {
   // ---- Scope (the area the dice lives in) --------------------------------
@@ -44,8 +46,10 @@ const diceConfig = {
     font: 'bold 600px Georgia, serif', // numbers style ("600px" is scaled to the texture)
     border: { width: 0, color: '#1b2b34' }, // optional square outline on every face (relative 0..0.1)
     textureSize: 512,    // px per face texture (higher = sharper, more memory)
-    // Optional: fully custom face images. Map of value -> image URL, e.g. { 1: logo }.
-    images: null,
+    // Optional: images drawn instead of the pips. Map of value -> image URL, e.g. { 1: logo },
+    // or a list of URLs to pick one at random on every throw/roll.
+    images: { 1: catvg },
+    imageScale: 0.6,     // image size relative to the face (keep < 0.76 to clear the bevel)
   },
 
   // ---- Lighting ------------------------------------------------------------------
@@ -94,6 +98,20 @@ const diceConfig = {
     maxDelay: 9000,      // ms, longest pause between idle tips
   },
 
+  // ---- Hover spin ------------------------------------------------------------------
+  // While the cursor is over the dice it tips up onto its bottom corner facing the
+  // screen and spins on it like a top; when the cursor leaves it slows down and drops
+  // back into the isometric pose.
+  hover: {
+    enabled: false,      // false = the dice only moves on scroll
+    speed: 7,          // turns per second at full speed
+    acceleration: 3,     // turns per second gained each second (spin-up)
+    riseDuration: 120,   // ms to tip up onto the corner
+    dropDuration: 100,   // ms to fall back onto a face
+    wobble: 0.3,        // radians of top-like wobble (0 = none)
+    hitRadius: 0.8,      // hover area, relative to the dice's on-screen radius
+  },
+
   // ---- Sound -------------------------------------------------------------------------
   // An audio file URL / array of URLs (one is picked at random), 'synth' for a wooden
   // knock generated in code with ZzFX (MIT), or null to turn that sound off.
@@ -116,3 +134,23 @@ const diceConfig = {
 };
 
 export default diceConfig;
+
+function isPlainObject(v) {
+  return v && typeof v === 'object' && !Array.isArray(v);
+}
+
+function mergeDeep(base, override) {
+  if (!isPlainObject(override)) return base;
+  const out = { ...base };
+  Object.keys(override).forEach((key) => {
+    out[key] = isPlainObject(base[key]) && isPlainObject(override[key])
+      ? mergeDeep(base[key], override[key])
+      : override[key];
+  });
+  return out;
+}
+
+// The defaults above with a (partial) user config merged in.
+export function mergeConfig(userConfig) {
+  return mergeDeep(diceConfig, userConfig);
+}

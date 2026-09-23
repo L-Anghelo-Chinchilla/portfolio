@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import defaultConfig from './diceConfig';
+import { mergeConfig } from './diceConfig';
 import { createFaceTextures } from './faceTextures';
 import { createDiceSounds } from './diceSounds';
 
@@ -35,21 +35,6 @@ const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 const easeTip = (t) => t * (0.35 + 0.65 * t);
 const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 
-function isPlainObject(v) {
-  return v && typeof v === 'object' && !Array.isArray(v);
-}
-
-function mergeDeep(base, override) {
-  if (!isPlainObject(override)) return base;
-  const out = { ...base };
-  Object.keys(override).forEach((key) => {
-    out[key] = isPlainObject(base[key]) && isPlainObject(override[key])
-      ? mergeDeep(base[key], override[key])
-      : override[key];
-  });
-  return out;
-}
-
 // Rest orientation showing `value` on top, snapped to a 90deg yaw so the
 // isometric silhouette is always the same.
 function restQuaternion(value) {
@@ -72,13 +57,18 @@ function randomAxis() {
   return new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
 }
 
-function Dice3D({ config: userConfig }) {
+// `released`: the initial throw waits (dice hidden) until this is true. LazyDice
+// holds it back while the browser blocks sound, until the visitor clicks/taps.
+function Dice3D({ config: userConfig, released = true }) {
   const containerRef = useRef(null);
-  const config = useMemo(() => mergeDeep(defaultConfig, userConfig), [userConfig]);
+  const config = useMemo(() => mergeConfig(userConfig), [userConfig]);
   // Rebuild the scene only when a serialisable option actually changes.
   const configKey = JSON.stringify(config);
   const onResultRef = useRef(config.onResult);
   onResultRef.current = config.onResult;
+  const releasedRef = useRef(released);
+  releasedRef.current = released;
+  const tossRef = useRef(null); // starts the waiting throw; set by the scene effect
 
   useEffect(() => {
     const container = containerRef.current;
@@ -210,7 +200,24 @@ function Dice3D({ config: userConfig }) {
       value: randomInt(1, 6),
       anim: null,
       pending: false,
+      waiting: false,    // hidden, waiting for the first click to be tossed
       worldCenter: null, // set while tipping (position comes from the pivot edge)
+    };
+    // Hover spin state (see "Hover" below); declared early because rolls check it.
+    const hoverSpin = {
+      active: false,
+      phase: 'idle', // 'rising' -> 'spinning' -> 'stopping' -> 'dropping'
+      t: 0,          // progress of rising / dropping (0..1)
+      angle: 0,      // spin around the vertical body diagonal
+      speed: 0,
+      target: 0,
+      precession: 0, // wobble direction
+      q0: new THREE.Quaternion(),
+      c0: new THREE.Vector3(),       // resting center
+      pivot: new THREE.Vector3(),    // center of the rounded corner touching the floor
+      diagonal: new THREE.Vector3(), // corner -> center, in the resting pose
+      tiltAxis: new THREE.Vector3(),
+      tiltAngle: 0,
     };
 
     const tmp = new THREE.Vector3();
@@ -325,7 +332,13 @@ function Dice3D({ config: userConfig }) {
     }
 
     // ---- Animations ------------------------------------------------------------------
+    // Faces with several images pick a new one while the dice is moving.
+    const shuffleFaces = () => {
+      Object.values(textures).forEach((t) => t.userData.shuffle && t.userData.shuffle());
+    };
+
     const startThrow = () => {
+      shuffleFaces();
       const target = randomSpot();
       const s0 = Math.min(cfg.throw.startScale, fitScale() * 0.98);
       const b0 = bounds(s0);
@@ -354,7 +367,9 @@ function Dice3D({ config: userConfig }) {
     }
 
     function startRoll() {
-      if (state.anim) { state.pending = true; return; }
+      if (state.waiting) return;
+      if (state.anim || hoverSpin.active) { state.pending = true; return; }
+      shuffleFaces();
       const plan = planRoll();
       state.value = plan.value;
       state.anim = {
@@ -447,9 +462,18 @@ function Dice3D({ config: userConfig }) {
     resize();
 
     // ---- Start ---------------------------------------------------------------------
-    if (cfg.throw.enabled && !reducedMotion) {
+    // Until `released`, the dice stays hidden (see the prop).
+    tossRef.current = () => {
+      if (!state.waiting) return;
+      state.waiting = false;
+      dice.visible = true;
       startThrow();
       stepAnimation(state.anim.start);
+    };
+    if (cfg.throw.enabled && !reducedMotion) {
+      state.waiting = true;
+      dice.visible = false;
+      if (releasedRef.current) tossRef.current();
     } else {
       const spot = randomSpot();
       state.x = spot.x;
@@ -461,14 +485,25 @@ function Dice3D({ config: userConfig }) {
     // ---- Scroll -> roll (exactly one roll per scroll gesture) ------------------
     // A wheel notch or swipe fires many scroll events; they count as one gesture
     // until the page has been still for `scrollIdle` ms.
+    //
+    // Only the visitor's own scrolling counts: when something above the view changes
+    // height (e.g. an auto-playing carousel), the browser shifts the page to keep the
+    // view steady, which also fires 'scroll'. So a gesture can only start shortly after
+    // real input (wheel, touch, key, click or scrollbar drag).
+    const USER_INPUT = ['wheel', 'touchstart', 'touchmove', 'keydown', 'mousedown', 'pointerdown'];
+    const INPUT_WINDOW_MS = 1000;
+    let lastInput = -Infinity;
+    const onUserInput = () => { lastInput = performance.now(); };
     let lastScrollY = window.scrollY;
     let gestureDistance = 0;
     let gestureRolled = false;
     let gestureTimer = null;
     const onScroll = () => {
       const y = window.scrollY;
-      gestureDistance += Math.abs(y - lastScrollY);
+      const moved = Math.abs(y - lastScrollY);
       lastScrollY = y;
+      if (gestureTimer === null && performance.now() - lastInput > INPUT_WINDOW_MS) return;
+      gestureDistance += moved;
       clearTimeout(gestureTimer);
       gestureTimer = setTimeout(() => {
         gestureTimer = null;
@@ -488,12 +523,138 @@ function Dice3D({ config: userConfig }) {
         startRoll();
       }
     };
+    USER_INPUT.forEach((e) => window.addEventListener(e, onUserInput, { passive: true, capture: true }));
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', resize);
 
+    // ---- Hover: stand on the bottom corner and spin like a top ---------------------
+    // The scope has pointer-events: none (it never blocks clicks), so hover is
+    // detected from the cursor position instead of DOM events.
+    //
+    // The bottom corner facing the screen is the one touching the floor nearest the
+    // viewer. The dice tips up around that corner until its body diagonal is vertical,
+    // spins around it (with a slight wobble, like a top), and when the cursor leaves it
+    // slows down to the next 120deg step and drops back. Every 120deg around the
+    // diagonal the cube maps onto itself, so it lands axis-aligned in the same spot and
+    // the isometric view is restored (the top face may change to a neighbour).
+    const STEP = (Math.PI * 2) / 3;
+    const hoverQuat = new THREE.Quaternion();
+    const tiltQuat = new THREE.Quaternion();
+    const wobbleQuat = new THREE.Quaternion();
+    const wobbleAxis = new THREE.Vector3();
+    const hoverCenter = new THREE.Vector3();
+    let pointer = null;
+
+    const onPointerMove = (e) => { pointer = { x: e.clientX, y: e.clientY }; };
+    const onPointerOut = (e) => { if (!e.relatedTarget) pointer = null; };
+
+    const isHovered = () => {
+      if (!pointer || !cfg.hover.enabled || reducedMotion) return false;
+      const rect = container.getBoundingClientRect();
+      const P = dice.position;
+      const cx = rect.left + W / 2 + P.dot(camRight);
+      const cy = rect.top + H / 2 - P.dot(camUp);
+      return Math.hypot(pointer.x - cx, pointer.y - cy) <= R * state.scale * cfg.hover.hitRadius;
+    };
+
+    const startHover = () => {
+      const h = hoverSpin;
+      h.active = true;
+      h.phase = 'rising';
+      h.t = 0;
+      h.angle = 0;
+      h.speed = 0;
+      h.q0.copy(state.quat);
+      restCenter(state.x, state.y, 1, h.c0);
+      // Bottom corner closest to the camera (camera looks along -ISO_DIRECTION).
+      h.pivot.set(Math.sign(ISO_DIRECTION.x) * edge, -edge, Math.sign(ISO_DIRECTION.z) * edge).add(h.c0);
+      h.diagonal.subVectors(h.c0, h.pivot).normalize();
+      h.tiltAxis.crossVectors(h.diagonal, UP).normalize();
+      h.tiltAngle = h.diagonal.angleTo(UP);
+    };
+
+    // Pose: spin `angle` around the body diagonal, then tilt `theta` around the floor
+    // corner (plus wobble while standing). The corner never leaves the floor.
+    const applyHoverPose = (theta, wobble) => {
+      const h = hoverSpin;
+      hoverQuat.setFromAxisAngle(h.diagonal, h.angle);
+      tiltQuat.setFromAxisAngle(h.tiltAxis, theta);
+      hoverQuat.premultiply(tiltQuat);
+      if (wobble > 0) {
+        wobbleAxis.set(Math.cos(h.precession), 0, Math.sin(h.precession));
+        wobbleQuat.setFromAxisAngle(wobbleAxis, wobble);
+        hoverQuat.premultiply(wobbleQuat);
+      }
+      state.quat.copy(h.q0).premultiply(hoverQuat);
+      state.worldCenter = hoverCenter.subVectors(h.c0, h.pivot).applyQuaternion(hoverQuat).add(h.pivot);
+      applyState();
+    };
+
+    const stepHover = (dt) => {
+      const h = hoverSpin;
+      const hovered = isHovered();
+      if (!h.active) {
+        if (hovered && !state.anim && !state.waiting) startHover();
+        else return;
+      }
+      const maxSpeed = cfg.hover.speed * Math.PI * 2;
+      if (h.phase === 'stopping' && hovered) h.phase = 'spinning';
+      if (h.phase === 'spinning' && !hovered) {
+        h.phase = 'stopping';
+        h.target = Math.max(STEP, Math.ceil(h.angle / STEP) * STEP);
+      }
+      const spinning = h.phase === 'rising' || h.phase === 'spinning';
+
+      if (spinning) {
+        h.speed = Math.min(maxSpeed, h.speed + cfg.hover.acceleration * Math.PI * 2 * dt);
+        h.angle += h.speed * dt;
+      } else if (h.phase === 'stopping') {
+        // Slow down smoothly so it stops exactly on a 120deg step.
+        const remaining = h.target - h.angle;
+        h.speed = Math.max(1, Math.min(h.speed, remaining * 6));
+        h.angle = Math.min(h.target, h.angle + h.speed * dt);
+      }
+      h.precession += h.speed * 0.3 * dt;
+
+      let theta = h.tiltAngle;
+      if (h.phase === 'rising') {
+        h.t = Math.min(1, h.t + (dt * 1000) / cfg.hover.riseDuration);
+        theta = h.tiltAngle * easeOutCubic(h.t);
+        if (h.t >= 1) h.phase = 'spinning';
+      } else if (h.phase === 'dropping') {
+        h.t = Math.min(1, h.t + (dt * 1000) / cfg.hover.dropDuration);
+        theta = h.tiltAngle * (1 - h.t * h.t); // falls faster and faster, like gravity
+      }
+      // A top wobbles more when it spins slowly; no wobble while tipping up or down.
+      const standing = h.phase === 'spinning' || h.phase === 'stopping';
+      // Capped: past ~35deg a neighbouring corner would sink into the floor.
+      const maxWobble = Math.min(Math.max(cfg.hover.wobble, 0), 0.5);
+      const wobble = standing ? maxWobble * (1 - 0.7 * (h.speed / maxSpeed)) : 0;
+      applyHoverPose(theta, wobble);
+
+      if (h.phase === 'stopping' && h.angle >= h.target) {
+        h.phase = 'dropping';
+        h.t = 0;
+      } else if (h.phase === 'dropping' && h.t >= 1) {
+        h.active = false;
+        h.phase = 'idle';
+        state.quat.normalize();
+        state.value = topValue(state.quat);
+        sounds.play('land');
+        settle();
+      }
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    document.addEventListener('pointerout', onPointerOut);
+
     // ---- Loop (renders only when something changed) --------------------------------
+    let last = performance.now();
     let frame = requestAnimationFrame(function loop(now) {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
       stepAnimation(now);
+      stepHover(dt);
       if (dirty) {
         renderer.render(scene, camera);
         dirty = false;
@@ -502,11 +663,15 @@ function Dice3D({ config: userConfig }) {
     });
 
     return () => {
+      tossRef.current = null;
       cancelAnimationFrame(frame);
       clearTimeout(gestureTimer);
       clearTimeout(idleTimer);
+      USER_INPUT.forEach((e) => window.removeEventListener(e, onUserInput, { capture: true }));
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerout', onPointerOut);
       geometry.dispose();
       floorGeometry.dispose();
       floorMaterial.dispose();
@@ -518,6 +683,10 @@ function Dice3D({ config: userConfig }) {
       renderer.domElement.remove();
     };
   }, [configKey]);
+
+  useEffect(() => {
+    if (released && tossRef.current) tossRef.current();
+  }, [released]);
 
   return (
     <div
