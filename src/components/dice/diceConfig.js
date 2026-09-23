@@ -89,7 +89,7 @@ const diceConfig = {
   // ---- Idle moves ----------------------------------------------------------------
   // When nothing happens, the dice tips over by itself after a random pause.
   idle: {
-    enabled: true,       // false = only move on scroll
+    enabled: false,       // false = only move on scroll
     minDelay: 4000,      // ms, shortest pause between idle tips
     maxDelay: 9000,      // ms, longest pause between idle tips
   },
