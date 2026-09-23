@@ -11,6 +11,7 @@ import awardsicon from './media/awards.png';
 import skillsicon from './media/skills.png';
 import projectsicon from './media/projects.png';
 import SillyCat from './components/SillyCat';
+import Dice3D from './components/dice/Dice3D';
 
 
 
@@ -98,6 +99,7 @@ function App() {
   
   return (
     <Tab.Container id="app" classname="App" defaultActiveKey="first" style={{'background-color':'rgb(113, 214, 182)'}}>
+      <Dice3D />
       <SNavbar>
         <Container>
           <Stack direction='horizontal' gap={3} >
