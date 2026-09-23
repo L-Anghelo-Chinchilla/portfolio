@@ -61,6 +61,11 @@ function Home() {
           <div className="d-flex justify-content-center">
             <p style={{ 'display': 'inline-block', 'margin': '  auto', 'font-weight': 'bold', 'justify-content': 'center' }}>Let's get in touch!</p>
           </div>
+          <div className="d-flex justify-content-center">
+            <small style={{ opacity: 0.7, marginTop: '8px' }}>
+              Dice sound: <a href="https://freesound.org/s/870350/" target="_blank" rel="noreferrer">"WoodBlock 3"</a> by Geoff Bremner, <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noreferrer">CC BY-NC 4.0</a>
+            </small>
+          </div>
         </div>
       </footer>
     </div>
