@@ -1,5 +1,6 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
@@ -12,6 +13,9 @@ import skillsicon from './media/skills.png';
 import projectsicon from './media/projects.png';
 import SillyCat from './components/SillyCat';
 import Dice3D from './components/dice/LazyDice';
+import useScreenFlip from './components/flip/useScreenFlip';
+import { primeMusic, setMusicRoom, startMusic } from './components/music/bgMusic';
+import MusicToggle from './components/music/MusicToggle';
 
 
 
@@ -96,10 +100,32 @@ const Stepper = styled.div`
 
 function App() {
   const [ show , setShow ] = useState(true);
-  
+  const [ activeKey , setActiveKey ] = useState('first');
+  const stageRef = useRef(null);
+  const contentRef = useRef(null);
+  const flip = useScreenFlip(stageRef, contentRef);
+
+  // Switching tabs makes the whole screen jump and turn around to the other tab.
+  const handleSelect = (key) => {
+    if (!key || key === activeKey) return;
+    const toDrawings = key === 'second';
+    // The music starts the first time Drawings is opened; prime it inside this click.
+    if (toDrawings) primeMusic();
+    flip(
+      () => {
+        flushSync(() => setActiveKey(key));
+        // On Programming the music sounds like it's playing in the room next door.
+        setMusicRoom(toDrawings ? 'open' : 'wall');
+      },
+      () => { if (toDrawings) startMusic(); }, // no-op once it's playing
+    );
+  };
+
   return (
-    <Tab.Container id="app" classname="App" defaultActiveKey="first" style={{'background-color':'rgb(113, 214, 182)'}}>
-      <Dice3D />
+    <Tab.Container id="app" activeKey={activeKey} onSelect={handleSelect} transition={false}>
+      <Dice3D hidden={activeKey !== 'first'} />
+      <MusicToggle />
+      <div ref={stageRef}>
       <SNavbar>
         <Container>
           <Stack direction='horizontal' gap={3} >
@@ -129,6 +155,7 @@ function App() {
           </Stack>
       </Container>
       </SNavbar>
+      <div ref={contentRef}>
       <Stepper/>
       <Tab.Content style={{'background-color':'rgb(113, 214, 182)' ,'width':'100vw'}} >
         <Tab.Pane eventKey="first" style={{'--bs-nav-pills-link-active-bg':'teal'}}>
@@ -138,6 +165,8 @@ function App() {
           <Drawings/>
         </Tab.Pane>
       </Tab.Content>
+      </div>
+      </div>
     </Tab.Container>
   );
 }

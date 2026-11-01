@@ -10,7 +10,7 @@ import unicornui from './../media/drawings/unicornui.jpg';
 import radio from './../media/drawings/radio.jpg';
 import dart from './../media/drawings/dart.jpg';
 import eye from './../media/drawings/eye.jpg';
-import { Col, Container, Row } from 'react-bootstrap';
+import SpiralCarousel from './SpiralCarousel';
 import styled from 'styled-components';
 
 const draws = [
@@ -61,63 +61,98 @@ const draws = [
 
 ]
 
-let H2 = styled.h2`
-  font-family: 'Georgia';
-  font-stretch: expanded;
-  font-weight: bolder;
-  display: flex;
-  margin:0px 20px ;
-  padding: 20px;
-  font-size:3rem;
-height: auto;
-`
-const Floating = styled.img`
-height:400px ; 
-margin:20px;  
-display:inline-block;
--webkit-box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39); 
-  box-shadow: -8px 10px 5px 0px rgba(0, 0, 0,0.39);         
-    border-color:white-space;
-  :hover
-  {
-      transform   :scale(1.1 , 1.1 );
-      transform   :translate(20% , 2    0%);
-      transition  :all  300ms  ease-out;
-    
+// How many drawings are on the path at once, and how often they move (ms).
+const SHOWN_DRAWINGS = 6;
+const SWITCH_EVERY_MS = 7000;
 
-      /* transition  :border-style 600ms linear ;
-      transition  :border-color 600ms linear ;
-      /* transition  :box-shadow 400ms ease-in-out 0ms; */
-      border-style:solid;
-      border-color: white;
-      border-width: 2px;
-      -webkit-box-shadow: -5px 15px 3px 0px rgba(0, 0, 0,0.39); 
-     box-shadow: -5px 15px 15px 3px rgba(0, 0, 0,0.39);         
-  }
-  
+// Text shown on the free half of each screen (screen 1: left, screen 2: right).
+const PROJECTS = [
+  {
+    title: 'Project 1',
+    text: 'Write a short description of this project here: what it is, the idea behind it and the tools you used.',
+    note: 'Tools / year',
+  },
+  {
+    title: 'Project 2',
+    text: 'Write a short description of this project here: what it is, the idea behind it and the tools you used.',
+    note: 'Tools / year',
+  },
+];
+
+// One screen = the viewport minus the 60px navbar.
+const SCREEN = 'calc(100vh - 60px)';
+
+const Screens = styled.div`
+  position: relative;
+  height: calc(2 * (100vh - 60px));
+`
+
+const Panel = styled.div`
+  position: absolute;
+  top: ${(p) => (p.$screen === 0 ? '0px' : SCREEN)};
+  left: ${(p) => (p.$side === 'left' ? '0' : '50%')};
+  width: 50%;
+  height: ${SCREEN};
+  padding: 6vh 4vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  z-index: 1;
+
   @media screen and (max-width:900px){
-      
-    margin: 7%;
-    width: 86% ;
-    height:auto;
+    left: 0;
+    width: 100%;
+    padding: 24px 16px;
+    z-index: 200; /* over the drawings on narrow screens */
   }
 `
- 
+
+const Title = styled.h2`
+  font-family: 'Georgia';
+  font-style: italic;
+  font-weight: bolder;
+  font-size: 3rem;
+  margin: 0 0 24px;
+  @media screen and (max-width:900px){
+    font-size: 2rem;
+  }
+`
+
+const Box = styled.div`
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  box-shadow: -8px 10px 14px rgba(0, 0, 0, 0.25);
+  padding: 24px;
+  font-size: 1.15rem;
+  line-height: 1.6;
+`
+
+const Note = styled.p`
+  margin: 16px 0 0 4px;
+  font-weight: bold;
+  opacity: 0.75;
+`
+
 const Drawings =( )=>
 {
   return (
-      <div style={{'background-color':'rgb(81, 183, 155)'}}>
-     <div style={{'height':'60px'}}/>
-    <H2>
-        MY DRAWINGS
-    </H2>
-    <Container className="align-items-center">
-        {draws.map(
-            e => (
-                    <Floating  src={e.img} />
-            )
-            )}
-    </Container>
+    <div style={{'background-color':'rgb(81, 183, 155)'}}>
+      <div style={{'height':'60px'}}/>
+      <Screens>
+        {PROJECTS.slice(0, 2).map((p, i) => (
+          <Panel key={p.title} $screen={i} $side={i === 0 ? 'left' : 'right'}>
+            <Title>{p.title}</Title>
+            <Box>{p.text}</Box>
+            {p.note && <Note>{p.note}</Note>}
+          </Panel>
+        ))}
+        <SpiralCarousel
+          images={draws.map((e) => e.img)}
+          count={SHOWN_DRAWINGS}
+          interval={SWITCH_EVERY_MS}
+        />
+      </Screens>
     </div>
   );
 }

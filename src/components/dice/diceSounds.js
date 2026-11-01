@@ -140,6 +140,31 @@ function synthWoodKnock(volume) {
   });
 }
 
+// Plays one or more ZzFX parameter lists at once through the shared, unlocked context.
+// Used by other effects on the page (e.g. the tab-switch jump).
+export function playSynth(...sounds) {
+  if (!AudioCtx) return;
+  installUnlock();
+  loadZzfx().then((Z) => {
+    if (!Z) return;
+    whenRunning((c) => {
+      Z.audioContext = c;
+      sounds.forEach((params) => Z.play(...params));
+    });
+  });
+}
+
+// The shared AudioContext (unlocked on the first click/tap), for other page audio.
+export function getAudioContext() {
+  if (!AudioCtx) return null;
+  installUnlock();
+  return getContext();
+}
+
+export function preloadSynth() {
+  if (AudioCtx) loadZzfx();
+}
+
 function isSynth(spec) {
   return spec === 'synth';
 }

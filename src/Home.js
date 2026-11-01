@@ -66,6 +66,11 @@ function Home() {
               Dice sound: <a href="https://freesound.org/s/870350/" target="_blank" rel="noreferrer">"WoodBlock 3"</a> by Geoff Bremner, <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noreferrer">CC BY-NC 4.0</a>
             </small>
           </div>
+          <div className="d-flex justify-content-center">
+            <small style={{ opacity: 0.7, marginTop: '4px' }}>
+              Music: <a href="https://opengameart.org/content/8-bit-battle-loop" target="_blank" rel="noreferrer">"8 Bit Battle Loop"</a> by Wolfgang_ (Theodore Kerr), <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noreferrer">CC0</a>
+            </small>
+          </div>
         </div>
       </footer>
     </div>

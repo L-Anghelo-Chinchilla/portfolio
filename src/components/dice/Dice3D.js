@@ -59,7 +59,11 @@ function randomAxis() {
 
 // `released`: the initial throw waits (dice hidden) until this is true. LazyDice
 // holds it back while the browser blocks sound, until the visitor clicks/taps.
-function Dice3D({ config: userConfig, released = true }) {
+// `hidden`: fades the dice out and pauses it (no rolls, hover or sounds); it keeps its
+// place and comes back as it was when `hidden` turns false again.
+function Dice3D({ config: userConfig, released = true, hidden = false }) {
+  const hiddenRef = useRef(hidden);
+  hiddenRef.current = hidden;
   const containerRef = useRef(null);
   const config = useMemo(() => mergeConfig(userConfig), [userConfig]);
   // Rebuild the scene only when a serialisable option actually changes.
@@ -502,6 +506,7 @@ function Dice3D({ config: userConfig, released = true }) {
       const y = window.scrollY;
       const moved = Math.abs(y - lastScrollY);
       lastScrollY = y;
+      if (hiddenRef.current) return;
       if (gestureTimer === null && performance.now() - lastInput > INPUT_WINDOW_MS) return;
       gestureDistance += moved;
       clearTimeout(gestureTimer);
@@ -653,6 +658,10 @@ function Dice3D({ config: userConfig, released = true }) {
     let frame = requestAnimationFrame(function loop(now) {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
+      if (hiddenRef.current) { // paused while hidden
+        frame = requestAnimationFrame(loop);
+        return;
+      }
       stepAnimation(now);
       stepHover(dt);
       if (dirty) {
@@ -702,6 +711,11 @@ function Dice3D({ config: userConfig, released = true }) {
         overflow: 'hidden',
         pointerEvents: 'none', // never blocks clicks on the page
         zIndex: config.scope.zIndex,
+        opacity: hidden ? 0 : 1,
+        visibility: hidden ? 'hidden' : 'visible',
+        transition: hidden
+          ? 'opacity 250ms ease, visibility 0s linear 250ms'
+          : 'opacity 250ms ease, visibility 0s',
       }}
     />
   );
