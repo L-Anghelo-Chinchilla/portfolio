@@ -1,0 +1,47 @@
+# Builds the portfolio and publishes it to the gh-pages branch of
+# L-Anghelo-Chinchilla/portfolio, which serves https://l-anghelo-chinchilla.github.io/portfolio/
+#
+# One-time setup:
+#   1. Create an SSH key pair (no passphrase).
+#   2. L-Anghelo-Chinchilla/portfolio -> Settings -> Deploy keys -> add the PUBLIC key,
+#      with "Allow write access" checked.
+#   3. RepartidorEspacial/portfolio -> Settings -> Secrets and variables -> Actions ->
+#      new repository secret PAGES_DEPLOY_KEY = the PRIVATE key.
+#   4. L-Anghelo-Chinchilla/portfolio -> Settings -> Pages: deploy from branch gh-pages, / (root).
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: # allows running it by hand from the Actions tab
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: false # don't fail the build on existing lint warnings
+
+      - name: Publish to L-Anghelo-Chinchilla/portfolio (gh-pages)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.PAGES_DEPLOY_KEY }}
+          external_repository: L-Anghelo-Chinchilla/portfolio
+          publish_branch: gh-pages
+          publish_dir: ./build
+          commit_message: Deploy ${{ github.sha }}
