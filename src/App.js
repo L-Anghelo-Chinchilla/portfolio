@@ -12,7 +12,6 @@ import awardsicon from './media/awards.png';
 import skillsicon from './media/skills.png';
 import projectsicon from './media/projects.png';
 import SillyCat from './components/SillyCat';
-import Dice3D from './components/dice/LazyDice';
 import useScreenFlip from './components/flip/useScreenFlip';
 import { primeMusic, setMusicRoom, startMusic } from './components/music/bgMusic';
 import MusicToggle from './components/music/MusicToggle';
@@ -123,7 +122,6 @@ function App() {
 
   return (
     <Tab.Container id="app" activeKey={activeKey} onSelect={handleSelect} transition={false}>
-      <Dice3D hidden={activeKey !== 'first'} />
       <MusicToggle />
       <div ref={stageRef}>
       <SNavbar>
