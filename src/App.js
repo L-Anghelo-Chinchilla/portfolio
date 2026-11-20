@@ -154,7 +154,7 @@ function App() {
                 <Nav.Link eventKey="first"> Programming </Nav.Link>
               </Pill >
               <Pill style={{'position':'relative'}} onClick={()=> setShow(false) }>
-                <Nav.Link eventKey="second"> Drawings </Nav.Link>
+                <Nav.Link eventKey="second"> Game Dev </Nav.Link>
                { show && <SillyCat/>}
               </Pill>
             </Nav>

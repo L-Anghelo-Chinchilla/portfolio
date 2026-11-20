@@ -6,11 +6,14 @@ import dib from './../media/Capa 4.svg';
 const BigP = styled.span`
     font-size: 35px;
     @media only screen and (max-width: 900px)  {
-        font-size: 20px;  
+        font-size: 20px;
     }
     font-weight: bolder;
     color: ${props => props.color};
     margin:20px 10px;
+    @media only screen and (max-width: 900px)  {
+        margin: 10px 6px;
+    }
     font-family: Monospace;
     letter-spacing: ${props => props.sp};
 `
@@ -20,9 +23,11 @@ position: relative;
 width: max( 30vw , 300px ) ;
 height: max(40vh , 100px ) ;
 margin: 0px 50% ;
-/* @media screen and (max-width:900px){
-       display :none ;
-} */
+@media screen and (max-width:900px){
+    /* the 50% side margins push the text off-screen on phones */
+    width: min(90vw, 500px);
+    margin: 0 auto;
+}
 // 'height': '30vw'
 `
 
