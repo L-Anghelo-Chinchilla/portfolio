@@ -129,20 +129,26 @@ function App() {
       <SNavbar>
         <Container>
           <Stack direction='horizontal' gap={3} >
-              <An  href="#awards"> Awards</An>
-              <Icon  href="#awards" >
-                <Iconimg src={ awardsicon } />
-              </Icon>
-              <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
-              <Icon  href="#skills" >
-                <Iconimg src={ skillsicon} />
-              </Icon>
-              <An  href="#skills"> Skills</An>
-              <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
-              <An  href="#work" > My Work</An>
-              <Icon   href="#work">
-               <Iconimg src={ projectsicon } />
-              </Icon>
+              {activeKey === 'second' ? (
+                <An as="span" style={{'cursor':'default'}}>Game Dev and My Drawings</An>
+              ) : (
+                <>
+                  <An  href="#awards"> Awards</An>
+                  <Icon  href="#awards" >
+                    <Iconimg src={ awardsicon } />
+                  </Icon>
+                  <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
+                  <Icon  href="#skills" >
+                    <Iconimg src={ skillsicon} />
+                  </Icon>
+                  <An  href="#skills"> Skills</An>
+                  <div style={{'width':'1px' , 'height':'20px' , 'background-color':'white' }}/>
+                  <An  href="#work" > My Work</An>
+                  <Icon   href="#work">
+                   <Iconimg src={ projectsicon } />
+                  </Icon>
+                </>
+              )}
             <Nav classname="justify-content-end" style={navi} variant="pills" >
               <Pill>
                 <Nav.Link eventKey="first"> Programming </Nav.Link>

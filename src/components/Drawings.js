@@ -11,6 +11,14 @@ import radio from './../media/drawings/radio.jpg';
 import dart from './../media/drawings/dart.jpg';
 import eye from './../media/drawings/eye.jpg';
 import SpiralCarousel from './SpiralCarousel';
+import FadeCarousel from './FadeCarousel';
+import sazon1 from './../media/projects/sazon1.png';
+import sazon2 from './../media/projects/sazon2.png';
+import sazon3 from './../media/projects/sazon3.png';
+import sazon4 from './../media/projects/sazon4.png';
+import precio1 from './../media/projects/precio1.webp';
+import precio2 from './../media/projects/precio2.webp';
+import precio3 from './../media/projects/precio3.webp';
 import styled from 'styled-components';
 
 const draws = [
@@ -66,16 +74,21 @@ const SHOWN_DRAWINGS = 6;
 const SWITCH_EVERY_MS = 7000;
 
 // Text shown on the free half of each screen (screen 1: left, screen 2: right).
+const ITCH_URL = 'https://anghelino.itch.io/';
 const PROJECTS = [
   {
-    title: 'Project 1',
-    text: 'Write a short description of this project here: what it is, the idea behind it and the tools you used.',
-    note: 'Tools / year',
+    title: 'La Sazón del Hogar',
+    text: 'A cozzy game with puzzles about making soup with your Grandma',
+    note: 'GODOT / 2026',
+    url: ITCH_URL,
+    images: [sazon1, sazon2, sazon3, sazon4],
   },
   {
-    title: 'Project 2',
-    text: 'Write a short description of this project here: what it is, the idea behind it and the tools you used.',
-    note: 'Tools / year',
+    title: 'El precio del presente',
+    text: 'A lovely game about wrapping gifts for the kids the night before Christmas, with graphics made by hand.',
+    note: 'GODOT / 2025',
+    url: ITCH_URL,
+    images: [precio1, precio2, precio3],
   },
 ];
 
@@ -142,8 +155,17 @@ const Drawings =( )=>
       <Screens>
         {PROJECTS.slice(0, 2).map((p, i) => (
           <Panel key={p.title} $screen={i} $side={i === 0 ? 'left' : 'right'}>
-            <Title>{p.title}</Title>
-            <Box>{p.text}</Box>
+            <Title>
+              <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
+                {p.title} 🔗
+              </a>
+            </Title>
+            <Box>
+              <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', marginBottom: 16 }}>
+                <FadeCarousel images={p.images} />
+              </a>
+              {p.text}
+            </Box>
             {p.note && <Note>{p.note}</Note>}
           </Panel>
         ))}
